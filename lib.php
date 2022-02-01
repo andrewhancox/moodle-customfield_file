@@ -23,6 +23,10 @@
  * @copyright 2021, Andrew Hancox
  */
 
+use core_customfield\data;
+use core_customfield\data_controller;
+use core_customfield\field_controller;
+
 defined('MOODLE_INTERNAL') || die;
 
 /**
@@ -37,15 +41,15 @@ defined('MOODLE_INTERNAL') || die;
  * @param array $options additional options affecting the file serving
  * @return bool false if the file not found, just send the file otherwise and do not return
  */
-function customfield_file_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function customfield_file_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     global $DB;
 
     $itemid = array_shift($args);
     if ($filearea === 'value') {
         // Value of the data, itemid = id in data table.
-        $datarecord = $DB->get_record(\core_customfield\data::TABLE, ['id' => $itemid], '*', MUST_EXIST);
-        $field = \core_customfield\field_controller::create($datarecord->fieldid);
-        $data = \core_customfield\data_controller::create(0, $datarecord, $field);
+        $datarecord = $DB->get_record(data::TABLE, ['id' => $itemid], '*', MUST_EXIST);
+        $field = field_controller::create($datarecord->fieldid);
+        $data = data_controller::create(0, $datarecord, $field);
         $handler = $field->get_handler();
         if ($field->get('type') !== 'file' || !$handler->can_view($field, $data->get('instanceid'))
             || $data->get_context()->id != $context->id) {

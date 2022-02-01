@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['maximumbytes'] = 'Maximum file size';
+$string['maximumfiles'] = 'Maximum number of files';
 $string['pluginname'] = 'File';
 $string['privacy:metadata'] = 'The file field type plugin doesn\'t store any personal data; it uses tables defined in core.';
 $string['specificsettings'] = 'File field settings';
-$string['maximumbytes'] = 'Maximum file size';
-$string['maximumfiles'] = 'Maximum number of files';

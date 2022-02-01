@@ -25,27 +25,23 @@
 
 namespace customfield_file;
 
+use MoodleQuickForm;
+
 defined('MOODLE_INTERNAL') || die;
 
-/**
- * Class field
- *
- * @package customfield_file
- * @copyright 2018 David Matamoros <davidmc@moodle.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class field_controller  extends \core_customfield\field_controller {
+class field_controller extends \core_customfield\field_controller {
     /**
      * Plugin type
      */
     const TYPE = 'file';
     const MAXFILES = 20;
+
     /**
      * Add fields for editing a file field.
      *
-     * @param \MoodleQuickForm $mform
+     * @param MoodleQuickForm $mform
      */
-    public function config_form_definition(\MoodleQuickForm $mform) {
+    public function config_form_definition(MoodleQuickForm $mform) {
         global $CFG;
 
         $mform->addElement('header', 'header_specificsettings', get_string('specificsettings', 'customfield_file'));
@@ -69,7 +65,7 @@ class field_controller  extends \core_customfield\field_controller {
     /**
      * Before delete bulk actions
      */
-    public function delete() : bool {
+    public function delete(): bool {
         global $DB;
         $fs = get_file_storage();
 

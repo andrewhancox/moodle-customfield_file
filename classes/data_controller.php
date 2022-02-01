@@ -25,20 +25,12 @@
 
 namespace customfield_file;
 
-use core_customfield\api;
-use core_customfield\output\field_data;
-use html_writer;
 use moodle_url;
+use MoodleQuickForm;
+use stdClass;
 
 defined('MOODLE_INTERNAL') || die;
 
-/**
- * Class data
- *
- * @package customfield_file
- * @copyright 2018 Daniel Neis Araujo <daniel@moodle.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class data_controller extends \core_customfield\data_controller {
 
     /**
@@ -52,13 +44,24 @@ class data_controller extends \core_customfield\data_controller {
     /**
      * Add fields for editing a file field.
      *
-     * @param \MoodleQuickForm $mform
+     * @param MoodleQuickForm $mform
      */
-    public function instance_form_definition(\MoodleQuickForm $mform) {
+    public function instance_form_definition(MoodleQuickForm $mform) {
         $mform->addElement('filemanager', $this->get_form_element_name(), $this->get_field()->get_formatted_name(), null, $this->get_filemanageroptions());
     }
 
-    public function instance_form_save(\stdClass $datanew) {
+    private function get_filemanageroptions() {
+        $field = $this->get_field();
+
+        return [
+            'maxfiles' => $field->get_configdata_property('maximumfiles'),
+            'maxbytes' => $field->get_configdata_property('maximumbytes'),
+            'subdirs' => 0,
+            'accepted_types' => '*'
+        ];
+    }
+
+    public function instance_form_save(stdClass $datanew) {
         $fieldname = $this->get_form_element_name();
         if (!property_exists($datanew, $fieldname)) {
             return;
@@ -81,17 +84,6 @@ class data_controller extends \core_customfield\data_controller {
         );
 
         parent::instance_form_save($datanew);
-    }
-
-    private function get_filemanageroptions() {
-        $field = $this->get_field();
-
-        return [
-            'maxfiles' => $field->get_configdata_property('maximumfiles'),
-            'maxbytes' => $field->get_configdata_property('maximumbytes'),
-            'subdirs' => 0,
-            'accepted_types' => '*'
-        ];
     }
 
     /**
