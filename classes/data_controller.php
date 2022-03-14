@@ -95,6 +95,14 @@ class data_controller extends \core_customfield\data_controller {
         return false;
     }
 
+    public function instance_form_before_set_data($data) {
+        $context = $this->get_field()->get_handler()->get_configuration_context();
+        $draftid_editor = file_get_submitted_draft_itemid($this->get_form_element_name());
+        file_prepare_draft_area($draftid_editor, $context->id, 'customfield_file',
+            'value', $this->get('id'), $this->get_filemanageroptions());
+        $data->{$this->get_form_element_name()} = $draftid_editor;
+    }
+
     /**
      * Returns value in a human-readable format
      *
