@@ -70,5 +70,5 @@ function customfield_file_pluginfile($course, $cm, $context, $filearea, $args, $
     }
 
     // We can now send the file back to the browser - in this case with a cache lifetime of 1 day and no filtering.
-    send_file($file, 86400, 0, $forcedownload, $options);
+    send_file($file, $file->get_filename(), 0, 0, false, $forcedownload);
 }
