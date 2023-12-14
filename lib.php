@@ -41,7 +41,7 @@ defined('MOODLE_INTERNAL') || die;
  * @param array $options additional options affecting the file serving
  * @return bool false if the file not found, just send the file otherwise and do not return
  */
-function customfield_file_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function customfield_file_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $DB;
 
     $itemid = array_shift($args);

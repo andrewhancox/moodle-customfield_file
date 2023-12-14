@@ -47,8 +47,7 @@ class field_controller extends \core_customfield\field_controller {
         $mform->addElement('header', 'header_specificsettings', get_string('specificsettings', 'customfield_file'));
         $mform->setExpanded('header_specificsettings', true);
 
-
-        $options = array();
+        $options = [];
         for ($i = 1; $i <= self::MAXFILES; $i++) {
             $options[$i] = $i;
         }
