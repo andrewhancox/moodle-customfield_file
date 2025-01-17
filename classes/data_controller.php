@@ -104,6 +104,33 @@ class data_controller extends \core_customfield\data_controller {
     }
 
     /**
+     * Implement the backup callback for the custom field element.
+     *
+     * @param \backup_nested_element $customfieldelement The custom field element to be backed up.
+     */
+    public function backup_define_structure(\backup_nested_element $customfieldelement): void {
+        $annotations = $customfieldelement->get_file_annotations();
+
+        if (!isset($annotations['customfield_file']['value'])) {
+            $customfieldelement->annotate_files('customfield_file', 'value', 'id');
+        }
+    }
+
+    /**
+     * Implement the restore callback for the custom field element.
+     *
+     * @param \restore_structure_step $step The restore step instance.
+     * @param int $newid The new ID for the custom field data after restore.
+     * @param int $oldid The original ID of the custom field data before backup.
+     */
+    public function restore_define_structure(\restore_structure_step $step, int $newid, int $oldid): void {
+        if (!$step->get_mappingid('customfield_file_data', $oldid)) {
+            $step->set_mapping('customfield_file_data', $oldid, $newid, true);
+            $step->add_related_files('customfield_file', 'value', 'customfield_file_data');
+        }
+    }
+
+    /**
      * Returns value in a human-readable format
      *
      * @return mixed|null value or null if empty
