@@ -233,7 +233,6 @@ class plugin_test extends \advanced_testcase {
         // Configure the restore settings.
         $rc->get_plan()->get_setting('logs')->set_value(true);
         $rc->get_plan()->get_setting('users')->set_value(true);
-        $rc->get_plan()->get_setting('customfields')->set_value(true);
 
         // Execute the restore process.
         $this->assertTrue($rc->execute_precheck());
