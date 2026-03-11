@@ -81,7 +81,7 @@ class plugin_test extends \advanced_testcase {
         $userfilerecord->itemid    = 123456;
         $userfilerecord->filepath  = '/';
         $userfilerecord->filename  = 'customfield.txt';
-        $userfilerecord->source    = 'test';
+        $userfilerecord->source    = 'O:8:"stdClass":1:{s:6:"source";s:11:"example.csv";}';
         $userfile = $fs->create_file_from_string($userfilerecord, 'Test content');
 
         $cfdata = $this->get_generator()->add_instance_data($this->cfield,
